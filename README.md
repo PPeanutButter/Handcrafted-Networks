@@ -6,3 +6,10 @@
 - 多个设备间通信
 
 显然，使用基于UDP的套接字(Sockets)完美符合物理层的功能(有点讽刺，我们需要在计算机网络上实现计算机网络)。使用套接字有一个好处，那就是不需要考虑电压、频率、相位等物理规律，将关注点保持在编程实现上。
+定义如下(应该采用高低电平Boolean以模仿线缆特性，为了简化采用Byte)：
+```kotlin
+interface Cable {
+    suspend fun write(data: Byte)
+    suspend fun read(): Flow<Byte>
+}
+```

@@ -25,4 +25,4 @@ interface Cable {
 > [!NOTE]
 > 这一节要解决的问题是：如何知道传输的比特流(字节流)结束了?
 
-我们采用最流行了IEEE 802.3标准，[参考链接](https://www.tup.tsinghua.edu.cn/upload/books/yz/048036-01.pdf)。
+我们采用IEEE 802.3标准的组帧协议，[参考链接](https://www.tup.tsinghua.edu.cn/upload/books/yz/048036-01.pdf)。

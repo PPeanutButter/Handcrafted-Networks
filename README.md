@@ -14,7 +14,7 @@
 
 以后有需要的时候可以再研究。
 ### 线缆
-定义如下(应该采用高低电平Boolean以模仿线缆特性，为了简化采用Byte)：
+定义如下(应该采用高低电平Boolean以模仿线缆特性，为了简化采用Byte。注意:以太网的帧远超过一个Byte，所以仍然需要实现组帧以上的功能)：
 ```kotlin
 interface Cable {
     suspend fun write(data: Byte)

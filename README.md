@@ -26,3 +26,30 @@ interface Cable {
 > 这一节要解决的问题是：如何知道传输的比特流(字节流)结束了?
 
 我们采用IEEE 802.3标准的组帧协议([参考链接](https://www.tup.tsinghua.edu.cn/upload/books/yz/048036-01.pdf))。至于现在的1000BaseT以太网用的协议，可以最后捎带提一嘴([参考链接](https://note.t4x.org/basic/network-ethernet-protocol-ii/))。由于是现代计算机架构，暂时也不考虑CSMA/CD算法，因为所有通信都是点对点的（除了WiFi，之后再考虑）。
+
+| 7 bytes  | 1 byte | 6 bytes             | 6 bytes        | 2 bytes | 46-1500 bytes         | 4 bytes |
+|----------|--------|---------------------|----------------|---------|-----------------------|---------|
+| Preamble | SOF    | Destination Address | Source Address | Length  | 802.2 Header and Data | FCS     |
+
+实际的代码实现如下:
+```kotlin
+internal class Frame_802_3(
+    private val source: ByteArray,
+    private val target: ByteArray,
+    private val payloads: ByteArray,
+) : Frame() {
+    private val outputStream = ByteArrayOutputStream(1526)
+
+    override fun getData(): ByteArray {
+        outputStream.write(ByteArray(7) { preamble.toByte() }) //前导码
+        outputStream.write(sdf) //启动定界符
+        outputStream.write(target) //目的MAC地址
+        outputStream.write(source) //源MAC地址
+        outputStream.write(payloads.size.shr(8)) //数据长度高字节
+        outputStream.write(payloads.size) //数据长度低字节
+        outputStream.write(payloads)// 数据负载
+        outputStream.write(calculateCRC(outputStream.toByteArray()).toByteArray())//原始协议只计算MAC到负载的CRC
+        return outputStream.toByteArray()
+    }
+}
+```

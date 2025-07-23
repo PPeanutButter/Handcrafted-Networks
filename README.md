@@ -29,7 +29,7 @@ interface Cable {
 
 | 7 bytes  | 1 byte | 6 bytes             | 6 bytes        | 2 bytes | 46-1500 bytes         | 4 bytes |
 |----------|--------|---------------------|----------------|---------|-----------------------|---------|
-| Preamble | SOF    | Destination Address | Source Address | Length  | 802.2 Header and Data | FCS     |
+| Preamble | SDF    | Destination Address | Source Address | Length  | 802.2 Header and Data | CRC     |
 
 实际的代码实现如下:
 ```kotlin

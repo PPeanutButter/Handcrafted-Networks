@@ -1,7 +1,7 @@
 package impl.cable
 
 import domain.Cable
-import domain.Port
+import domain.model.Port
 import kotlinx.coroutines.channels.Channel
 
 class MemoryCable(
